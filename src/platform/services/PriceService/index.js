@@ -25,28 +25,26 @@ export class PriceService extends BaseStore {
 
 
   onStart() {
-    this.priceGenerator();
+    setInterval(() => {
+      this.generatePrice();
+    }, 1000);
 
     reaction(
-      () => ([this.bidPrice, this.askPrice]),
-      ([bidPrice, askPrice]) => {
-        //console.log(['price', bidPrice, askPrice]);
+      () => (this.selectedAssetData),
+      () => {
+        this.generatePrice();
       },
     );
 
     return true;
   }
 
-  priceGenerator() {
-    setInterval(() => {
-      if (this.selectedAssetData) {
-        const { minPrice, spread } = this.selectedAssetData;
-        runInAction(() => {
-          this.bidPrice = randNumber(minPrice - 10, minPrice + 10);
-          this.askPrice = randNumber(minPrice + spread + 10, minPrice + spread - 10);
-        });
-      }
-    }, 1000);
+  @action generatePrice() {
+    if (this.selectedAssetData) {
+      const { minPrice, spread } = this.selectedAssetData;
+      this.bidPrice = randNumber(minPrice - 10, minPrice + 10);
+      this.askPrice = randNumber(minPrice + spread + 10, minPrice + (spread - 10));
+    }
   }
 }
 
