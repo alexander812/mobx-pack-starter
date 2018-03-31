@@ -6,6 +6,7 @@ import DealFormStore from 'platform/containers/DealForm/store/DealFormStore.js';
 
 import AssetSelector from 'platform/containers/AssetSelector/index.jsx';
 import Timer from 'platform/containers/Timer/index.jsx';
+import DealBlock from 'platform/containers/DealBlock/index.jsx';
 
 
 const Form = () => (
@@ -13,7 +14,7 @@ const Form = () => (
     <h1>Form</h1>
     <Timer />
     <AssetSelector />
-
+    <DealBlock />
   </div>
 );
 
