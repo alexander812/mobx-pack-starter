@@ -22,19 +22,23 @@ export class PriceService extends BaseStore {
 
   @observable bidPrice = null;
   @observable askPrice = null;
+  asset = null;
 
 
   onStart() {
-    setInterval(() => {
-      this.generatePrice();
-    }, 1000);
+
 
     reaction(
       () => (this.selectedAssetData),
       () => {
+        this.asset = this.selectedAssetData.id;
         this.generatePrice();
-      },
+      }, true
     );
+
+    setInterval(() => {
+      this.generatePrice();
+    }, 1000);
 
     return true;
   }

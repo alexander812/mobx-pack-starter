@@ -6,7 +6,6 @@ const DealBlock = ({ quantity, api }) => (
       <input type="text" value={quantity} onChange={api.enterQuantity} />
       <button onClick={api.buyAsset}>Buy</button>
       <button onClick={api.sellAsset}>Sell</button>
-
     </label>
   </div>
 );

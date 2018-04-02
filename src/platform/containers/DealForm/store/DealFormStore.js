@@ -1,6 +1,8 @@
 import { observable, action, runInAction, computed, toJS } from 'mobx';
 import { BaseStore } from 'mobx-pack';
-import { ASSET_SERVICE, BASE_SERVICE, DEAL_SERVICE } from 'platform/constants/moduleNames.js';
+import { ASSET_SERVICE, BASE_SERVICE, DEAL_SERVICE, BALANCE_SERVICE, PRICE_SERVICE }
+  from 'platform/constants/moduleNames.js';
+import { DEAL_TYPE } from 'platform/constants/common.js';
 
 
 export default class DealFormStore extends BaseStore {
@@ -10,8 +12,13 @@ export default class DealFormStore extends BaseStore {
       [BASE_SERVICE]: {
         serverTimeDelta: 'serverTimeDelta',
       },
-      [ASSET_SERVICE]: {
-        selectedAsset: 'selectedAsset',
+      [BALANCE_SERVICE]: {
+        balance: 'balance',
+      },
+      [PRICE_SERVICE]: {
+        asset: 'asset',
+        bidPrice: 'bidPrice',
+        askPrice: 'askPrice',
       },
     },
   };
@@ -22,7 +29,9 @@ export default class DealFormStore extends BaseStore {
     return {
       time: this.time,
       quantity: Number(this.quantity),
-      asset: this.selectedAsset,
+      bidPrice: this.bidPrice,
+      askPrice: this.askPrice,
+      asset: this.asset,
     };
   }
 
@@ -58,11 +67,17 @@ export default class DealFormStore extends BaseStore {
   }
   @action buyAsset() {
     const data = toJS(this.deal);
-    this.callApi(DEAL_SERVICE, 'addDeal', { ...{ type: 'buy' }, ...data });
+    const result = this.callApi(DEAL_SERVICE, 'makeDeal', { ...{ type: DEAL_TYPE.BUY }, ...data });
+    if (result !== true) {
+      alert(result);
+    }
   }
   @action sellAsset() {
     const data = toJS(this.deal);
-    this.callApi(DEAL_SERVICE, 'addDeal', { ...{ type: 'sell' }, ...data });
+    const result = this.callApi(DEAL_SERVICE, 'makeDeal', { ...{ type: DEAL_TYPE.SELL }, ...data });
+    if (result !== true) {
+      alert(result);
+    }
   }
 
   @action enterQuantity(e) {

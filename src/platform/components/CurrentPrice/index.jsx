@@ -2,12 +2,12 @@ import React from 'react';
 
 const CurrentPrice = ({ asset, bid, ask }) => (
   <div>
-    Asset Id: <strong> {asset} </strong><br />
-    Bid price: <strong>{bid}</strong> <br />
-    Ask price: <strong>{ask}</strong> <br />
+    <h3>Current price:</h3>
+    <div><strong>Asset Id:</strong> {asset}</div>
+    <div><strong>Bid price:</strong> {bid}</div>
+    <div><strong>Ask price:</strong> {ask}</div>
   </div>
 );
-
 
 export default CurrentPrice;
 

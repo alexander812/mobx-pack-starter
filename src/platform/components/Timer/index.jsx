@@ -2,7 +2,7 @@ import React from 'react';
 
 const Timer = ({ time }) => (
   <div>
-    время: {new Date(time).toTimeString()}
+    <strong>Time:</strong> {new Date(time).toTimeString()}
   </div>
 );
 

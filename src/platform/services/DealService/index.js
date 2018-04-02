@@ -1,16 +1,22 @@
 import { BaseStore } from 'mobx-pack';
 import { observable, action } from 'mobx';
-import { DEAL_SERVICE } from 'platform/constants/moduleNames.js';
+import { DEAL_SERVICE, BALANCE_SERVICE } from 'platform/constants/moduleNames.js';
+import { DEAL_TYPE, ASSET_NAMES } from 'platform/constants/common.js';
 import context from 'platform/helper/context.js';
 
 
 export class PriceService extends BaseStore {
   config = {
     bindAs: DEAL_SERVICE,
+    importData: {
+      [BALANCE_SERVICE]: {
+        balance: 'balance',
+      },
+    },
   };
 
   api = {
-    addDeal: this.addDeal,
+    makeDeal: this.makeDeal,
   };
 
   @observable deals = [];
@@ -20,8 +26,29 @@ export class PriceService extends BaseStore {
     return true;
   }
 
-  @action addDeal(data) {
-    this.deals.push({ ...{ id: this.deals.length }, ...data });
+  @action makeDeal(data) {
+    const deal = { ...{ id: this.deals.length }, ...data };
+    let result = true;
+    const {
+      asset, quantity, bidPrice, askPrice,
+    } = deal;
+
+    const sum = quantity * (data.type === DEAL_TYPE.BUY ? askPrice : bidPrice);
+
+    result = this.callApi(
+      BALANCE_SERVICE, 'changeBalance',
+      {
+        [ASSET_NAMES.USD]: data.type === DEAL_TYPE.BUY ? -sum : sum,
+        [asset]: quantity,
+
+      },
+    );
+
+    if (result === true) {
+      this.deals.push(deal);
+    }
+
+    return result;
   }
 }
 

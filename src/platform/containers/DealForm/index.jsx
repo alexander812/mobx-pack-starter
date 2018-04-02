@@ -11,7 +11,7 @@ import DealBlock from 'platform/containers/DealBlock/index.jsx';
 
 const Form = () => (
   <div>
-    <h1>Form</h1>
+    <h3>Form</h3>
     <Timer />
     <AssetSelector />
     <DealBlock />
