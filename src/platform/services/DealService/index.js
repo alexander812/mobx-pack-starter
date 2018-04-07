@@ -13,6 +13,9 @@ export class PriceService extends BaseStore {
         balance: 'balance',
       },
     },
+    exportData: {
+      deals: 1,
+    },
   };
 
   api = {

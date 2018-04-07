@@ -9,6 +9,11 @@ import { fetchAssets } from 'platform/services/AssetService/client.js';
 export class AssetService extends BaseStore {
   config = {
     bindAs: ASSET_SERVICE,
+    exportData: {
+      assetCollection: 1,
+      selectedAsset: 1,
+      selectedAssetData: 1,
+    },
   };
 
   api = {

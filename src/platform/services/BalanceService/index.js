@@ -27,6 +27,9 @@ function validateBalanceChange(balance, data) {
 export class BalanceService extends BaseStore {
   config = {
     bindAs: BALANCE_SERVICE,
+    exportData: {
+      balance: 1,
+    },
   };
 
   api = {

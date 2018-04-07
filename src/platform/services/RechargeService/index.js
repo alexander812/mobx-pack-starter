@@ -8,6 +8,10 @@ import context from 'platform/helper/context.js';
 export class RechargeService extends BaseStore {
   config = {
     bindAs: RECHARGE_SERVICE,
+    exportData: {
+      bonusPercent: 1,
+      defaultAmount: 1,
+    },
   };
 
   api = {
@@ -22,7 +26,6 @@ export class RechargeService extends BaseStore {
     const amount = val + parseInt((val / 100) * this.bonusPercent, 10);
     this.callApi(BALANCE_SERVICE, 'changeBalance', { [ASSET_NAMES.USD]: amount });
   }
-
 }
 
 

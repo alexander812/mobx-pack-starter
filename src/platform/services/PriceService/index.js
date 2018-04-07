@@ -15,6 +15,10 @@ export class PriceService extends BaseStore {
         selectedAssetData: 'selectedAssetData',
       },
     },
+    exportData: {
+      bidPrice: 1,
+      askPrice: 1,
+    },
     waitFor: [ASSET_SERVICE],
   };
 
