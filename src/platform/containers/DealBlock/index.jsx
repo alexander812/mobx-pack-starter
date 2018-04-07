@@ -8,6 +8,7 @@ export default Connector(
     helper(store) {
       return {
         quantity: store.quantity,
+        isRecharge: store.isRecharge,
       };
     },
   },

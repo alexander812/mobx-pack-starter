@@ -26,14 +26,12 @@ export class PriceService extends BaseStore {
 
 
   onStart() {
-
-
     reaction(
       () => (this.selectedAssetData),
       () => {
         this.asset = this.selectedAssetData.id;
         this.generatePrice();
-      }, true
+      }, true,
     );
 
     setInterval(() => {

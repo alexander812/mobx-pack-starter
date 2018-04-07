@@ -10,9 +10,11 @@ export default Connector(
     store() {
       return new RechargeFormStore(context);
     },
-    helper() {
+    helper(store) {
       return {
         bonusPercent: rechargeService.bonusPercent,
+        inFocus: store.inFocus,
+        amount: store.amount,
       };
     },
     services: [rechargeService],

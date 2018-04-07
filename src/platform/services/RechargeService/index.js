@@ -23,9 +23,6 @@ export class RechargeService extends BaseStore {
     this.callApi(BALANCE_SERVICE, 'changeBalance', { [ASSET_NAMES.USD]: amount });
   }
 
-  @action rechargeDefault(){
-    this.callApi(BALANCE_SERVICE, 'changeBalance', { [ASSET_NAMES.USD]: this.defaultAmount });
-  }
 }
 
 

@@ -1,5 +1,5 @@
 import { find } from 'lodash';
-import { observable, action, computed, reaction } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { BaseStore } from 'mobx-pack';
 import { ASSET_SERVICE } from 'platform/constants/moduleNames.js';
 import context from 'platform/helper/context.js';
@@ -25,16 +25,6 @@ export class AssetService extends BaseStore {
 
 
   onStart() {
-    /*   reaction(
-         ()=>{
-           return this.selectedAsset;
-         },
-         (asset)=>{
-           console.log(asset);
-         },
-       );
-   */
-
     return fetchAssets().then((data) => {
       this.resetAssetCollection(data);
     });

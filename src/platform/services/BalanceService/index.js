@@ -16,7 +16,7 @@ function validateBalanceChange(balance, data) {
     } else if (val === 0) {
       result = 'Wrong operation with 0';
     } else if (balance[asset] + val < 0) {
-      result = 'Not enough facilities for operation';
+      result = 'Not enough funds for operation';
     }
   });
 

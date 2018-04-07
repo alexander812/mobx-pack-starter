@@ -1,34 +1,38 @@
-import { observable, action, runInAction, computed, toJS } from 'mobx';
+import { observable, action } from 'mobx';
 import { BaseStore } from 'mobx-pack';
-import { ASSET_SERVICE, BASE_SERVICE, DEAL_SERVICE, BALANCE_SERVICE, PRICE_SERVICE, RECHARGE_SERVICE }
+import { RECHARGE_SERVICE, RECHARGE_FORM_STORE }
   from 'platform/constants/moduleNames.js';
 
 
 export default class DealFormStore extends BaseStore {
   config = {
-    bindAs: ' RechargeFormStore',
+    bindAs: RECHARGE_FORM_STORE,
     importData: {
-      [BASE_SERVICE]: {
-        serverTimeDelta: 'serverTimeDelta',
-      },
-      [BALANCE_SERVICE]: {
-        balance: 'balance',
-      },
-      [PRICE_SERVICE]: {
-        asset: 'asset',
-        bidPrice: 'bidPrice',
-        askPrice: 'askPrice',
+      [RECHARGE_SERVICE]: {
+        defaultAmount: 'defaultAmount',
       },
     },
   };
 
   api = {
     recharge: this.recharge,
-
+    focusRecharge: this.focusRecharge,
+    setDefaultAmount: this.setDefaultAmount,
   };
+
+  @observable inFocus;
+  @observable amount = 0;
 
   @action recharge(val) {
     this.callApi(RECHARGE_SERVICE, 'recharge', val);
+  }
+
+  @action focusRecharge() {
+    this.inFocus = new Date().getTime();
+  }
+
+  @action setDefaultAmount() {
+    this.amount = this.defaultAmount;
   }
 }
 

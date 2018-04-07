@@ -1,6 +1,9 @@
 import { observable, action, runInAction, computed, toJS } from 'mobx';
 import { BaseStore } from 'mobx-pack';
-import { ASSET_SERVICE, BASE_SERVICE, DEAL_SERVICE, BALANCE_SERVICE, PRICE_SERVICE }
+import {
+  ASSET_SERVICE, BASE_SERVICE, DEAL_SERVICE, BALANCE_SERVICE, PRICE_SERVICE,
+  RECHARGE_SERVICE, RECHARGE_FORM_STORE,
+}
   from 'platform/constants/moduleNames.js';
 import { DEAL_TYPE } from 'platform/constants/common.js';
 
@@ -8,6 +11,9 @@ import { DEAL_TYPE } from 'platform/constants/common.js';
 export default class DealFormStore extends BaseStore {
   config = {
     bindAs: 'DealFormStore',
+    onBind: [[RECHARGE_SERVICE, () => {
+      this.initRecharge();
+    }]],
     importData: {
       [BASE_SERVICE]: {
         serverTimeDelta: 'serverTimeDelta',
@@ -22,7 +28,7 @@ export default class DealFormStore extends BaseStore {
       },
     },
   };
-
+  @observable isRecharge = false;
   @observable time = null;
   @observable quantity = 0;
   @computed get deal() {
@@ -42,13 +48,16 @@ export default class DealFormStore extends BaseStore {
     buyAsset: this.buyAsset,
     sellAsset: this.sellAsset,
     enterQuantity: this.enterQuantity,
+    focusRecharge: this.focusRecharge,
   };
 
   onStart() {
     this.initTimer();
     return true;
   }
-
+  initRecharge() {
+    this.isRecharge = true;
+  }
   initTimer() {
     this.timerId = setInterval(() => {
       runInAction(() => {
@@ -85,6 +94,11 @@ export default class DealFormStore extends BaseStore {
     if (!Number.isNaN(Number(val))) {
       this.quantity = val;
     }
+  }
+
+  @action focusRecharge() {
+    this.callApi(RECHARGE_FORM_STORE, 'setDefaultAmount');
+    this.callApi(RECHARGE_FORM_STORE, 'focusRecharge');
   }
 }
 
